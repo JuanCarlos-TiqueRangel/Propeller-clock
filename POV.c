@@ -100,9 +100,9 @@ void display(){
             
         for(i=0;i!=29;i++){
             for(j=0;j!=6;j++){
-            
-                LED_DATA = table[time[i]][j]; /*sending element which has include in array as data
- to LED at one by one according to loop */
+                /*sending element which has include in array as data
+                to LED at one by one according to loop */
+                LED_DATA = table[time[i]][j]; 
 
                 delay_us(250);                
             }
@@ -113,15 +113,10 @@ void display(){
 
 /////////////////////////////////////////SET TIMER////////////////////////////////////
 void ini_tim_intr(){
-
     OCR1A = 499;              // Set the value that you want to count to
-
     TIMSK |= (1 << OCIE1A);  //Set the ISR COMPA vect
-
     sei();                   //enable interrupts
-
     TCCR1B |= (1 << WGM12)|(1 << CS11); // set prescaler to 8 and start the timer    
-    
 }
 ///////////////////////////////////////END of SET TIMER////////////////////////////////
 
@@ -139,7 +134,6 @@ ISR (TIMER1_COMPA_vect)
                 
                     if(++hours==24){//hours value is increase by one and check for the hours is equql to 24
                         hours=0;
-                        
                     }
                 }
                 else{
@@ -188,13 +182,10 @@ int main(void){
                     }
                 }
                 else{
-                
                     if(++hours==13){//hours value is increase by one and check for the hours is equql to 13
-                    
                         hours=1;
                     }    
                 }
-                
             delay_ms(100);
         }            
                 
@@ -203,7 +194,6 @@ int main(void){
                     H12OR24=1;  
                     delay_ms(100);
                 }
-                
                 else{
                     H12OR24=0;
                     delay_ms(100);
