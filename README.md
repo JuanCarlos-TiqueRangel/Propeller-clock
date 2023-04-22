@@ -23,3 +23,22 @@ Flash the compiled code onto the PIC microcontroller using PICKIT or any other s
 
 # License
 This code is released under the MIT License. Feel free to modify and use it in your own projects.
+
+```bash
+# Your bash code here
+```
+<button class="btn" onclick="copyToClipboard(event)">Copy</button>
+
+<script>
+  function copyToClipboard(event) {
+    const button = event.target;
+    const code = button.parentNode.querySelector('code');
+    const text = code.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      button.innerText = 'Copied!';
+      setTimeout(() => {
+        button.innerText = 'Copy';
+      }, 2000);
+    });
+  }
+</script>
