@@ -5,7 +5,7 @@
 #include <stdlib.h> 
 
 #include <16F877A.h>
-#device ADC=8 // conversor A/D con 8 bits de resolución
+#device ADC=8 // conversor A/D con 8 bits de resoluciï¿½n
 
 //============================================================================================
 //								Definiciones Generales										//
@@ -74,7 +74,6 @@ unsigned int count=0,start=0, stop=0, minute=0, seconds=0, hours=0, H12OR24=0;
 /////////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////DECODE COUNT VALUE///////////////////////////////
-
 void decode(){
 
     time[7]=seconds%10;
@@ -92,12 +91,10 @@ void decode(){
     time[0]=hours/10;
     //hours value divided by 10 and take only integer value of answer and it assign to time[0]. 
 }
-
 ///////////////////////////////////////END of DECODE//////////////////////////////////
 
 
 //////////////////////////////////////Display Part////////////////////////////////////
-
 void display(){ 
     unsigned int i=0,j=0;
             
@@ -146,37 +143,28 @@ ISR (TIMER1_COMPA_vect)
                     }
                 }
                 else{
-                
                     if(++hours==13){//hours value is increase by one and check for the hours is equql to 13
                     hours=1;
-                    
                     }
                 }
             }            
         }
-
     }                
-
 }
-
 ///////////////////////ENDT of TIME1 INTERRUPT SERVICE ROOTING//////////////////////////
 
 
 ////////////////////////////MAIN FUNCTION///////////////////////////////////////////////
-
-
 int main(void){
 
 //---------------Phototransistor interrupt initialising------------------------------
-
     sei();                    // turn on interrupts
     DDRD &= ~(1 << DDD2);    // Clear the PD2 pin    
     PORTD |= (1 << PORTD2);  // turn On the Pull-up ( now PD2 is an input with pull-up enabled)
     MCUCR |= (1 << ISC01);   // set INT0 to trigger on falling edge.
     GICR  |= (1 << INT0);    // Turns on INT0
-    
-
 //---------------------------------------------------------------------------------
+
     LED_DATA_D=0xff;    //LED PORT set as output (PORTA    )
     EXLED_DATA_D=0xff;    //LED PORT set as output (PORTB)
     SW_D=0;             //SW PORT set as input (PORTC)
@@ -187,27 +175,17 @@ int main(void){
     EXLED_DATA=3;
 
         if((SW_IO & (1<<SW1))==0){//check for the button is pressed
-   
-                    
                 if(++minute>=60){//minute value is increase by one and check for the minute is equql to 60
-                
                     minute=0;                                             
                 }    
-                
-            delay_ms(100);
-                
+            delay_ms(100);   
         }
         
-        if((SW_IO & (1<<SW2))==0){// check for the button is pressed
-   
-                                                
+        if((SW_IO & (1<<SW2))==0){// check for the button is pressed                         
                 if(H12OR24==1){
-                
                     if(++hours==24){//hours value is increase by one and check for the hours is equql to 24
-                    
                         hours=0;
                     }
-                    
                 }
                 else{
                 
@@ -221,37 +199,25 @@ int main(void){
         }            
                 
         if((SW_IO & (1<<SW3))==0){ //check for the button is pressed
-        
-            
                 if(H12OR24==0){ 
-                
                     H12OR24=1;  
                     delay_ms(100);
-                    
                 }
                 
                 else{
-                
                     H12OR24=0;
                     delay_ms(100);
-                
                 }
-                
-                
         }
-    
     }
-
 }
 ////////////////////////////////END OF THE MAIN FUNCTION///////////////////////////////////////////////
-
 
 //////////////////////Phototransistor INTERRUPT SERVICE ROOTING////////////////////////////////////////
 ISR (INT0_vect)
 {    
     decode();
     display();
-    
 }
 ////////////////////END of Phototransistor INTERRUPT SERVICE ROOTING///////////////////////////////////
 
